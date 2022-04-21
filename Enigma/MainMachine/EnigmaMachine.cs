@@ -81,7 +81,7 @@ namespace Enigma.MainMachine
         }
         public void SaveConfig()
         {
-            using (StreamWriter file = File.CreateText(@"C:\Users\danil\source\repos\Enigma\Enigma\config.json"))
+            using (StreamWriter file = File.CreateText(Constants.configPath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;

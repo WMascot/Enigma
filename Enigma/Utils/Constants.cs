@@ -8,5 +8,6 @@ namespace Enigma.Utils
         public const int alphabetLength = 32;
         public static Regex regex = new Regex(@"^[а-яА-Я]+$");
         public static Regex regexMess = new Regex(@"^[а-я\sА-Я]+$");
+        public static string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Enigma.MainMachine;
+using Enigma.Utils;
 using Newtonsoft.Json;
 
 string str;
@@ -8,7 +9,7 @@ string decryption;
 
 EnigmaMachine Enigma = new EnigmaMachine();
 
-using (StreamReader file = File.OpenText(@"C:\Users\danil\source\repos\Enigma\Enigma\config.json"))
+using (StreamReader file = File.OpenText(Constants.configPath))
 {
     JsonSerializer serializer = new JsonSerializer();
     serializer.Formatting = Formatting.Indented;
