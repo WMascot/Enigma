@@ -1,5 +1,3 @@
-Enigma
-
 <h1>How to use</h1>
 <h2>1. Create Enigma and Rotors, then Add Rotors</h2>
 
@@ -28,7 +26,7 @@ Enigma
 	Enigma.SetKey("КПР");
 ```
 
-<h2>4. Encrypt any message using spaces and Russians Letters except for "Й"</h2>
+<h2>4. Encrypt any message using spaces and Russian Letters except for "Й"</h2>
 
 ```C#
 	string encryption = Enigma.Encrypt("Шла Саша по шоссе и сосала сушку");
