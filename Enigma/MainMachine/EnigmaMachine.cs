@@ -52,13 +52,13 @@ namespace Enigma.MainMachine
         }
         public string Encrypt(string message)
         {
-            if (!Constants.regexMess.IsMatch(message)) throw new ArgumentException("Wrong chars in message");
+            if (Constants.regexMessFalse.IsMatch(message)) throw new ArgumentException("Wrong chars in message");
             char res;
             message = message.ToUpper();
             string encrypted_message = "";
             foreach (char c in message)
             {
-                if (c == ' ')
+                if (!Constants.alphabet.Contains(c))
                 {
                     encrypted_message += c;
                     continue;
