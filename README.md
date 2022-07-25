@@ -26,7 +26,7 @@
 	Enigma.SetKey("КПР");
 ```
 
-<h2>4. Encrypt any message using spaces and Russian Letters except for "Й"</h2>
+<h2>4. Encrypt any message using spaces and Russian Letters except for "Ё"</h2>
 
 ```C#
 	string encryption = Enigma.Encrypt("Шла Саша по шоссе и сосала сушку");
