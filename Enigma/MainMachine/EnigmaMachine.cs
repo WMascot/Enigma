@@ -89,6 +89,17 @@ namespace Enigma.MainMachine
                 serializer.Serialize(file, this);
             }
         }
+        public EnigmaMachine LoadConfig()
+        {
+            if (File.Exists(Constants.configPath)) throw new FileNotFoundException("Config file doesnt exist");
+            using (StreamReader file = File.OpenText(Constants.configPath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
+                return (EnigmaMachine)serializer.Deserialize(file, typeof(EnigmaMachine));
+            }
+        }
         public void ConnectRotors()
         {
             for (int i = 0; i < Rotors.Count; i++)

@@ -9,13 +9,7 @@ string decryption;
 
 EnigmaMachine Enigma = new EnigmaMachine();
 
-using (StreamReader file = File.OpenText(Constants.configPath))
-{
-    JsonSerializer serializer = new JsonSerializer();
-    serializer.Formatting = Formatting.Indented;
-    serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
-    Enigma = (EnigmaMachine)serializer.Deserialize(file, typeof(EnigmaMachine));
-}
+Enigma = Enigma.LoadConfig();
 
 Enigma.ConnectRotors();
 
