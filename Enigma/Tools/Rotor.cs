@@ -6,7 +6,7 @@ namespace Enigma.Tools
     public class Rotor
     {
         [JsonRequired]
-        private readonly string chars;
+        private string chars;
         [JsonIgnore]
         public int currentIndex { get; private set; } = 0;
         [JsonIgnore]
@@ -15,6 +15,13 @@ namespace Enigma.Tools
         public Rotor Previos { get; set; }
         [JsonRequired]
         public RotorType Type { get; }
+
+        public Rotor(RotorType type)
+        {
+            Type = type;
+            chars = Constants.alphabet;
+        }
+
         public Rotor(RotorType type, string chars)
         {
             if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong chars in Rotor string");
@@ -23,6 +30,7 @@ namespace Enigma.Tools
             this.chars = chars.ToUpper();
             rotations = 0;
         }
+
         public void SetLetter(char start)
         {
             if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong Letter for Key");
@@ -59,6 +67,12 @@ namespace Enigma.Tools
             add = Next.chars.IndexOf(char.ToUpper(input)) - Next.currentIndex;
             final = (currentIndex + add + Constants.alphabetLength) % Constants.alphabetLength;
             return chars[final];
+        }
+        public void ChangeRotorChars(string chars)
+        {
+            if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong chars in Commutator chars string");
+            if (chars.Length != 32) throw new ArgumentOutOfRangeException(nameof(this.chars));
+            this.chars = chars.ToUpper();
         }
     }
 }

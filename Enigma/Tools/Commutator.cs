@@ -7,15 +7,19 @@ namespace Enigma.Tools
     {
         [JsonRequired]
         private readonly string chars;
+        public Commutator()
+        {
+            chars = Constants.alphabet;
+        }
         public Commutator(string chars)
         {
             if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong chars in Commutator chars string");
-            if (chars.Length != 32) throw new ArgumentOutOfRangeException("Length of Commutator's chars must be equal 32.");
+            if (chars.Length != 32) throw new ArgumentOutOfRangeException(nameof(this.chars));
             this.chars = chars.ToUpper();
         }
         public char EntryOnExit(char input)
         {
-            int index = Array.IndexOf(Constants.alphabet, input);
+            int index = Constants.alphabet.IndexOf(input);
             return chars[index];
         }
         public char ExitOnEntry(char input)

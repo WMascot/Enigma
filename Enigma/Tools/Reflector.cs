@@ -9,6 +9,11 @@ namespace Enigma.Tools
         private readonly string input;
         [JsonRequired]
         private readonly string output;
+        public Reflector()
+        {
+            input = Constants.alphabet.Substring(0, 16);
+            output = Constants.alphabet.Substring(16);
+        }
         public Reflector(string input, string output)
         {
             if (!Constants.regex.IsMatch(input)) throw new ArgumentException("Wrong chars in Reflector input");
