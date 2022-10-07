@@ -16,13 +16,18 @@ namespace Enigma.Tools
         [JsonRequired]
         public RotorType Type { get; }
 
-        public Rotor(RotorType type)
+        public Rotor() 
+        {
+            chars = Constants.alphabet;
+            rotations = 0;
+        }
+        public Rotor(RotorType type) : this()
         {
             Type = type;
             chars = Constants.alphabet;
+            rotations = 0;
         }
-
-        public Rotor(RotorType type, string chars)
+        public Rotor(RotorType type, string chars) : this(type)
         {
             if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong chars in Rotor string");
             if (chars.Length != 32) throw new ArgumentOutOfRangeException("Length of Rotor's chars must be equal 32.");

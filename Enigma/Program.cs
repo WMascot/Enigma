@@ -7,11 +7,23 @@ string key;
 string encryption;
 string decryption;
 
-EnigmaMachine Enigma = new EnigmaMachine();
 
-Enigma = Enigma.LoadConfig();
+EnigmaMachine Enigma = EnigmaMachine.LoadConfig();
 
-Enigma.ConnectRotors();
+//EnigmaMachine Enigma = new();
+
+//Enigma.SetReflector("МНЩЮЗЫФИДЛХТПАРЬ", "ЪСЙВУКЦЭШЖБГОЕЧЯ");
+//Enigma.SetCommutator("ЗЦЮШПДЬЧЩОНЖЙТЛХИБЯЫФРГЕАЪЭУКМВС");
+
+//Enigma.CreateRotors(3);
+
+//Enigma.SetRotor(1, "ЮЕМДЛСКОБПЫЭЖФЦАЬЩЙЗГШЧТРЯЪХУВИН");
+//Enigma.SetRotor(2, "ЕФМЦЗУХОКАШЭРЯЮЛИВПЪЬТЙЧНЩГЫЖДБС");
+//Enigma.SetRotor(3, "ЭЧИЖВЪШЮХЬКДПЛЙЩБФТОУСГЦРЕЫЯАМНЗ");
+
+//EnigmaMachine.SaveConfig(Enigma);
+
+//Enigma.ConnectRotors();
 
 Console.WriteLine("Введите сообщение: ");
 str = Console.ReadLine();
@@ -29,4 +41,4 @@ Enigma.SetKey(key);
 
 decryption = Enigma.Encrypt(encryption);
 
-Console.WriteLine(decryption.Replace(" ТЧК", ".").Replace(" ЗПТ", ","));
+Console.WriteLine(decryption);

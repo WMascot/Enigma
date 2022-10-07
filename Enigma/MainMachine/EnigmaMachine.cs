@@ -12,9 +12,12 @@ namespace Enigma.MainMachine
         public Reflector Reflector { get; private set; }
         [JsonRequired]
         public Commutator Commutator { get; private set; }
+        [JsonConstructor]
         public EnigmaMachine()
         {
             Rotors = new List<Rotor>();
+            Reflector = new Reflector();
+            Commutator = new Commutator();
         }
         public void SetReflector(string input, string output)
         {
@@ -23,6 +26,12 @@ namespace Enigma.MainMachine
         public void SetCommutator(string chars)
         {
             Commutator = new Commutator(chars.ToUpper());
+        }
+        public void SetRotor(int index, string chars)
+        {
+            if (index < 1 || index > Rotors.Count) throw new ArgumentOutOfRangeException(nameof(Rotors)); 
+            Rotor rotor = Rotors[index - 1];
+            rotor.ChangeRotorChars(chars);
         }
         public void AddRotor(Rotor rotor)
         {
@@ -33,14 +42,6 @@ namespace Enigma.MainMachine
                 Rotors[index].Previos = Rotors[index - 1];
                 Rotors[index - 1].Next = Rotors[index];
             }
-        }
-        public void RemoveRotor(Rotor rotor)
-        {
-            Rotors.Remove(rotor);
-        }
-        public void ChangeRotor(Rotor rotor, int position)
-        {
-            Rotors[position - 1] = rotor;
         }
         public void SetKey(string key)
         {
@@ -79,28 +80,8 @@ namespace Enigma.MainMachine
             }
             return encrypted_message;
         }
-        public void SaveConfig()
-        {
-            using (StreamWriter file = File.CreateText(Constants.configPath))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
-                serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
-                serializer.Serialize(file, this);
-            }
-        }
-        public EnigmaMachine LoadConfig()
-        {
-            if (File.Exists(Constants.configPath)) throw new FileNotFoundException("Config file doesnt exist");
-            using (StreamReader file = File.OpenText(Constants.configPath))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
-                serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
-                return (EnigmaMachine)serializer.Deserialize(file, typeof(EnigmaMachine));
-            }
-        }
-        public void ConnectRotors()
+
+        private void ConnectRotors()
         {
             for (int i = 0; i < Rotors.Count; i++)
             {
@@ -109,6 +90,37 @@ namespace Enigma.MainMachine
                     Rotors[i].Previos = Rotors[i - 1];
                     Rotors[i - 1].Next = Rotors[i];
                 }
+            }
+        }
+        public void CreateRotors(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Rotor rotor = new Rotor((RotorType)i);
+                Rotors.Add(rotor);
+            }
+            ConnectRotors();
+        }
+
+        public static void SaveConfig(EnigmaMachine enigmaMachine)
+        {
+            using (StreamWriter file = File.CreateText(Constants.configPath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
+                serializer.Serialize(file, enigmaMachine);
+            }
+        }
+        public static EnigmaMachine LoadConfig()
+        {
+            if (!File.Exists(Constants.configPath)) throw new FileNotFoundException("Config file doesnt exist");
+            using (StreamReader file = File.OpenText(Constants.configPath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.PreserveReferencesHandling = PreserveReferencesHandling.All;
+                return (EnigmaMachine)serializer.Deserialize(file, typeof(EnigmaMachine));
             }
         }
     }
