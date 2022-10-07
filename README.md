@@ -4,13 +4,11 @@
 ```C#
 	EnigmaMachine Enigma = new EnigmaMachine();
 	
-	Rotor first = new Rotor(RotorType.Rotor_I ,"ЮЕМДЛСКОБПЫЭЖФЦАЬЩЙЗГШЧТРЯЪХУВИН");
-	Rotor second = new Rotor(RotorType.Rotor_II, "ЕФМЦЗУХОКАШЭРЯЮЛИВПЪЬТЙЧНЩГЫЖДБС");
-	Rotor third = new Rotor(RotorType.Rotor_III, "ЭЧИЖВЪШЮХЬКДПЛЙЩБФТОУСГЦРЕЫЯАМНЗ");
+	Enigma.CreateRotors(3);
 
-	Enigma.AddRotor(first);
-	Enigma.AddRotor(second);
-	Enigma.AddRotor(third);
+	Enigma.SetRotor(1, "ЮЕМДЛСКОБПЫЭЖФЦАЬЩЙЗГШЧТРЯЪХУВИН");
+	Enigma.SetRotor(2, "ЕФМЦЗУХОКАШЭРЯЮЛИВПЪЬТЙЧНЩГЫЖДБС");
+	Enigma.SetRotor(3, "ЭЧИЖВЪШЮХЬКДПЛЙЩБФТОУСГЦРЕЫЯАМНЗ");
 ```
 	
 <h2>2. Create Reflector and Commutator within the Enigma</h2>
