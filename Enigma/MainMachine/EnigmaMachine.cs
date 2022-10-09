@@ -39,8 +39,7 @@ namespace Enigma.MainMachine
         {
             for (int i = 0; i < count; i++)
             {
-                Rotor rotor = new Rotor((RotorType)i);
-                Rotors.Add(rotor);
+                Rotors.Add(new Rotor());
             }
             ConnectRotors();
         }

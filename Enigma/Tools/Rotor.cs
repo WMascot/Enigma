@@ -13,25 +13,16 @@ namespace Enigma.Tools
         public int rotations { get; private set; } = 0;
         public Rotor Next { get; set; }
         public Rotor Previos { get; set; }
-        [JsonRequired]
-        public RotorType Type { get; }
 
-        public Rotor() 
+        public Rotor()
         {
             chars = Constants.alphabet;
             rotations = 0;
         }
-        public Rotor(RotorType type) : this()
-        {
-            Type = type;
-            chars = Constants.alphabet;
-            rotations = 0;
-        }
-        public Rotor(RotorType type, string chars) : this(type)
+        public Rotor(string chars) : this()
         {
             if (!Constants.regex.IsMatch(chars)) throw new ArgumentException("Wrong chars in Rotor string");
             if (chars.Length != 32) throw new ArgumentOutOfRangeException("Length of Rotor's chars must be equal 32.");
-            Type = type;
             this.chars = chars.ToUpper();
             rotations = 0;
         }
@@ -60,7 +51,7 @@ namespace Enigma.Tools
         public char EntryOnExit(char input)
         {
             int add, final;
-            if (Type == RotorType.Rotor_I) return input;
+            if (Previos is null) return input;
             add = Previos.chars.IndexOf(char.ToUpper(input)) - Previos.currentIndex;
             final = (currentIndex + add + Constants.alphabetLength) % Constants.alphabetLength;
             return chars[final];
@@ -68,7 +59,7 @@ namespace Enigma.Tools
         public char ExitOnEntry(char input)
         {
             int add, final;
-            if (Type == RotorType.Rotor_III) return input;
+            if (Next is null) return input;
             add = Next.chars.IndexOf(char.ToUpper(input)) - Next.currentIndex;
             final = (currentIndex + add + Constants.alphabetLength) % Constants.alphabetLength;
             return chars[final];
