@@ -12,6 +12,7 @@ namespace Enigma.MainMachine
         public Reflector Reflector { get; private set; }
         [JsonRequired]
         public Commutator Commutator { get; private set; }
+
         [JsonConstructor]
         public EnigmaMachine()
         {
@@ -19,6 +20,7 @@ namespace Enigma.MainMachine
             Reflector = new Reflector();
             Commutator = new Commutator();
         }
+
         public void SetReflector(string input, string output)
         {
             Reflector = new Reflector(input.ToUpper(), output.ToUpper());
@@ -32,6 +34,15 @@ namespace Enigma.MainMachine
             if (index < 1 || index > Rotors.Count) throw new ArgumentOutOfRangeException(nameof(Rotors)); 
             Rotor rotor = Rotors[index - 1];
             rotor.ChangeRotorChars(chars);
+        }
+        public void CreateRotors(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Rotor rotor = new Rotor((RotorType)i);
+                Rotors.Add(rotor);
+            }
+            ConnectRotors();
         }
         public void AddRotor(Rotor rotor)
         {
@@ -53,7 +64,7 @@ namespace Enigma.MainMachine
         }
         public string Encrypt(string message)
         {
-            if (Constants.regexMessFalse.IsMatch(message)) throw new ArgumentException("Wrong chars in message");
+            if (Constants.regexMessageFalse.IsMatch(message)) throw new ArgumentException("Wrong chars in message");
             char res;
             message = message.ToUpper();
             string encrypted_message = "";
@@ -91,15 +102,6 @@ namespace Enigma.MainMachine
                     Rotors[i - 1].Next = Rotors[i];
                 }
             }
-        }
-        public void CreateRotors(int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Rotor rotor = new Rotor((RotorType)i);
-                Rotors.Add(rotor);
-            }
-            ConnectRotors();
         }
 
         public static void SaveConfig(EnigmaMachine enigmaMachine)

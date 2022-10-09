@@ -9,12 +9,13 @@ namespace Enigma.Tools
         private readonly string input;
         [JsonRequired]
         private readonly string output;
+
         public Reflector()
         {
             input = Constants.alphabet.Substring(0, 16);
             output = Constants.alphabet.Substring(16);
         }
-        public Reflector(string input, string output)
+        public Reflector(string input, string output) : this()
         {
             if (!Constants.regex.IsMatch(input)) throw new ArgumentException("Wrong chars in Reflector input");
             if (!Constants.regex.IsMatch(output)) throw new ArgumentException("Wrong chars in Reflector output");
@@ -22,6 +23,7 @@ namespace Enigma.Tools
             this.input = input.ToUpper();
             this.output = output.ToUpper();
         }
+
         public char Reflect(char input)
         {
             if (this.input.Contains(input)) return output[this.input.IndexOf(input)];
